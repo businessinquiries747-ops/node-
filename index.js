@@ -1,19 +1,29 @@
-// server.js
-const http = require('http');
+const express = require('express');
+const axios = require('axios');
+const app = express();
+const PORT = process.env.PORT || 8081;
 
-// Render dodjeljuje port preko environment varijable
-const PORT = process.env.PORT || 3000;
+app.get('/', async (req, res) => {
+  const username = req.query.username || 'myogeshchavan97';
+  try {
+    const result = await axios.get(
+      `https://api.github.com/users/${username}/repos`
+    );
+    const repos = result.data
+      .map((repo) => ({
+        name: repo.name,
+        url: repo.html_url,
+        description: repo.description,
+        stars: repo.stargazers_count
+      }))
+      .sort((a, b) => b.stars - a.stars);
 
-const server = http.createServer((req, res) => {
-  if (req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end('<h1>Pozdrav, dobrodošao na početnu stranicu!</h1>');
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/html' });
-    res.end('<h1>404 - Stranica nije pronađena</h1>');
+    res.send(repos);
+  } catch (error) {
+    res.status(400).send('Error while getting list of repositories');
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`Server radi na portu ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`server started on port ${PORT}`);
 });
