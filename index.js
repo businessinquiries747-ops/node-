@@ -18,8 +18,9 @@ const server = http.createServer((req, res) => {
   `);
 });
 
-server.listen('/', () => {
+server.listen(3000, () => {
   console.log('Server pokrenut na https://node-3dti.onrender.com/');
 
 });
+
 
