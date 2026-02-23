@@ -1,14 +1,22 @@
-// server.mjs
-import { createServer } from 'node:http';
+// Uvezi http modul
+const http = require('http');
 
-const server = createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World!\n');
+// Definiraj port
+const PORT = 3000;
+
+// Napravi server
+const server = http.createServer((req, res) => {
+  // Provjeri da li je ruta '/'
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h1>Pozdrav, dobrodošao na početnu stranicu!</h1>');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/html' });
+    res.end('<h1>404 - Stranica nije pronađena</h1>');
+  }
 });
 
-// starts a simple http server locally on port 3000
-server.listen(3000, '127.0.0.1', () => {
-  console.log('Listening on 127.0.0.1:3000');
+// Pokreni server
+server.listen(PORT, () => {
+  console.log(`Server radi na http://localhost:${PORT}`);
 });
-
-// run with `node server.mjs`
