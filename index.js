@@ -18,6 +18,7 @@ const server = http.createServer((req, res) => {
   `);
 });
 
-server.listen(3000, () => {
+server.listen(node-3dti.onrender.com, () => {
   console.log('Server pokrenut na http://localhost:3000');
+
 });
