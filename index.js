@@ -1,12 +1,10 @@
-// Uvezi http modul
+// server.js
 const http = require('http');
 
-// Definiraj port
-const PORT = 3000;
+// Render dodjeljuje port preko environment varijable
+const PORT = process.env.PORT || 3000;
 
-// Napravi server
 const server = http.createServer((req, res) => {
-  // Provjeri da li je ruta '/'
   if (req.url === '/') {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('<h1>Pozdrav, dobrodošao na početnu stranicu!</h1>');
@@ -16,7 +14,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-// Pokreni server
 server.listen(PORT, () => {
-  console.log(`Server radi na http://localhost:${PORT}`);
+  console.log(`Server radi na portu ${PORT}`);
 });
